@@ -84,3 +84,41 @@ print(f"Average Rate: {average_rate:.2f}%")
 print(f"Average Period: {average_period}")
 print(f"Actual Rate: {actual_rate:.2f}%")
 print(f"Actual Effective Date: {actual_effective_date}")
+
+import json
+from pathlib import Path
+
+# Load the previously saved HMRC rates
+database_file = Path("rates.json")
+
+with database_file.open("r", encoding="utf-8") as file:
+    previous_rates = json.load(file)
+
+# Prepare the latest HMRC rates
+current_rates = {
+    "actual": {
+        "rate": actual_rate,
+        "effective_date": actual_effective_date
+    },
+    "average": {
+        "rate": average_rate,
+        "period": average_period
+    }
+}
+
+# Compare the latest rates with the saved rates
+print("\n--- RATE COMPARISON ---")
+
+if current_rates["actual"] != previous_rates["actual"]:
+    print("CHANGE DETECTED: Actual Official Rate")
+    print("Previous:", previous_rates["actual"])
+    print("Current:", current_rates["actual"])
+else:
+    print("Actual Official Rate: No change")
+
+if current_rates["average"] != previous_rates["average"]:
+    print("CHANGE DETECTED: Average Official Rate")
+    print("Previous:", previous_rates["average"])
+    print("Current:", current_rates["average"])
+else:
+    print("Average Official Rate: No change")
