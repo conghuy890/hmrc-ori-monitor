@@ -64,3 +64,23 @@ for number, table in enumerate(parser.tables, start=1):
 
     for row in table[:5]:
         print(" | ".join(row))
+
+# Extract the latest Average Official Rate
+average_table = parser.tables[0]
+average_row = average_table[1]
+
+average_period = average_row[0]
+average_rate = float(average_row[1])
+
+# Extract the latest Actual Official Rate
+actual_table = parser.tables[1]
+actual_row = actual_table[1]
+
+actual_effective_date = actual_row[0]
+actual_rate = float(actual_row[-1])
+
+print("\n--- HMRC ORI MONITOR ---")
+print(f"Average Rate: {average_rate:.2f}%")
+print(f"Average Period: {average_period}")
+print(f"Actual Rate: {actual_rate:.2f}%")
+print(f"Actual Effective Date: {actual_effective_date}")
