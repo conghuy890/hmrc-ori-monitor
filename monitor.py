@@ -122,3 +122,12 @@ if current_rates["average"] != previous_rates["average"]:
     print("Current:", current_rates["average"])
 else:
     print("Average Official Rate: No change")
+
+# Save updated rates when a change is detected
+if current_rates != previous_rates:
+    with database_file.open("w", encoding="utf-8") as file:
+        json.dump(current_rates, file, indent=2)
+
+    print("\nRates updated successfully in rates.json")
+else:
+    print("\nNo update required.")
